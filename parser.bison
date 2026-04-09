@@ -6,7 +6,7 @@
 
      #include "ast.h"
      #define YYSTYPE struct expr *
-     struct decl * parser_result = 0;
+     struct expr * parser_result = 0;
 %}
 
 %token TOKEN_INT
@@ -31,9 +31,9 @@
 	char *name;
 };
 
-%type <decl> program decl_list decl 
+%type <decl> decl_list decl 
 %type <stmt> stmt
-%type <expr> expr term factor
+%type <expr> expr term factor program
 %type <type> type
 %type <name> name
 
