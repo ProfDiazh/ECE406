@@ -39,37 +39,37 @@
 
 %%
 
-program : decl_list                { parser_result = decl_create(0,0,0,0,$1); }
+program : decl_list                { parser_result = 0; }
       ;
 
 
-decl_list : decl decl_list         { $$ = 0; }
-          | /* epsilon */          { $$ = 0; }
+decl_list : decl decl_list         
+          | /* epsilon */          
       ; 
 
 
 
-decl : type name TOKEN_SEMI        		    { $$ = decl_create($2,$1,0,0,0); }
-     | type name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($2,$1,$4,0,0); }
+decl : type name TOKEN_SEMI        		    
+     | type name TOKEN_ASSIGN expr TOKEN_SEMI    
      ;
 
 
-expr : expr TOKEN_PLUS term        { $$ = expr_create(EXPR_ADD,$1,$3); }
-     | expr TOKEN_MINUS term       { $$ = expr_create(EXPR_SUB,$1,$3); }
-     | term                        { $$ = 0; }
+expr : expr TOKEN_PLUS term        
+     | expr TOKEN_MINUS term       
+     | term                        
      ;
 
 
-term : term TOKEN_MUL factor       { $$ = expr_create(EXPR_MUL,$1,$3);  }
-     | term TOKEN_DIV factor       { $$ = expr_create(EXPR_DIV,$1,$3);  }
-     | factor                      { $$ = 0; }
+term : term TOKEN_MUL factor       
+     | term TOKEN_DIV factor       
+     | factor                      
      ;
 
 
 
-factor : TOKEN_MINUS factor            { $$ = expr_create(EXPR_SUB, expr_create_integer_literal(0),$2); }
-     | TOKEN_LPAREN expr TOKEN_RPAREN  { $$ = 0; }
-     | TOKEN_INT                       { $$ = expr_create_integer_literal(atoi(yytext)); }
+factor : TOKEN_MINUS factor            
+     | TOKEN_LPAREN expr TOKEN_RPAREN  
+     | TOKEN_INT                       
      ;
 
 %%
