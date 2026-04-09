@@ -14,8 +14,8 @@ DIGIT [0-9]
 \(                            { return TOKEN_LPAREN; }
 \)                            { return TOKEN_RPAREN; }
 \;                            { return TOKEN_SEMI; }
+\=                            { return TOKEN_ASSIGN; }
 .                             { return TOKEN_ERROR; }
-
 %%
 int yywrap() { return 1; }
 

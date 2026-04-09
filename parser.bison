@@ -18,6 +18,8 @@
 %token TOKEN_RPAREN
 %token TOKEN_SEMI
 %token TOKEN_ERROR
+%token TOKEN_ASSIGN
+
 %union {
 	struct decl *decl;
 	struct stmt *stmt;
@@ -27,6 +29,8 @@
 };
 
 %type <decl> program decl_list decl 
+%type <stmt> stmt
+%type <expr> expr term factor
 %type <type> type
 %type <name> name
 
