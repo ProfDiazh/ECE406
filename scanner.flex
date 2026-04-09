@@ -3,6 +3,7 @@
 %}
 
 DIGIT [0-9]
+LETTER [a-zA-Z]
 
 %%
 (" "|\t|\n)     /* skip whitespace */
@@ -15,6 +16,10 @@ DIGIT [0-9]
 \)                            { return TOKEN_RPAREN; }
 \;                            { return TOKEN_SEMI; }
 \=                            { return TOKEN_ASSIGN; }
+stm                           { return stmt; }
+(int|boolean|char)            { return type; }
+{LETTER}+({DIGIT}|{LETTER}|\_)*                             { return name; }
+
 .                             { return TOKEN_ERROR; }
 %%
 int yywrap() { return 1; }

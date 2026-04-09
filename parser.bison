@@ -19,6 +19,9 @@
 %token TOKEN_SEMI
 %token TOKEN_ERROR
 %token TOKEN_ASSIGN
+%token stmt
+%token type
+%token name
 
 %union {
 	struct decl *decl;
@@ -46,7 +49,7 @@ decl_list : decl decl_list         { $$ = $1; $1->next = $2; }
 
 
 
-decl : type name TOKEN_SEMI        		 { $$ = decl_create($2,$1,0,0,0); }
+decl : type name TOKEN_SEMI        		    { $$ = decl_create($2,$1,0,0,0); }
      | type name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($2,$1,$4,0,0); }
      ;
 
