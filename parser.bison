@@ -40,10 +40,10 @@
 %%
 
 program : decl_list                { parser_result = decl_create(0,0,0,0,$1); }
-     ;
+      ;
 
 
-decl_list : decl decl_list         { $$ = $1; $1->next = $2; }
+decl_list : decl decl_list         { $$ = 0; }
           | /* epsilon */          { $$ = 0; }
       ; 
 
@@ -56,19 +56,19 @@ decl : type name TOKEN_SEMI        		    { $$ = decl_create($2,$1,0,0,0); }
 
 expr : expr TOKEN_PLUS term        { $$ = expr_create(EXPR_ADD,$1,$3); }
      | expr TOKEN_MINUS term       { $$ = expr_create(EXPR_SUB,$1,$3); }
-     | term                        { $$ = $1; }
+     | term                        { $$ = 0; }
      ;
 
 
 term : term TOKEN_MUL factor       { $$ = expr_create(EXPR_MUL,$1,$3);  }
      | term TOKEN_DIV factor       { $$ = expr_create(EXPR_DIV,$1,$3);  }
-     | factor                      { $$ = $1; }
+     | factor                      { $$ = 0; }
      ;
 
 
 
 factor : TOKEN_MINUS factor            { $$ = expr_create(EXPR_SUB, expr_create_integer_literal(0),$2); }
-     | TOKEN_LPAREN expr TOKEN_RPAREN  { $$ = $2; }
+     | TOKEN_LPAREN expr TOKEN_RPAREN  { $$ = 0; }
      | TOKEN_INT                       { $$ = expr_create_integer_literal(atoi(yytext)); }
      ;
 
