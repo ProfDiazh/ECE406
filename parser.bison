@@ -4,7 +4,7 @@
 
      extern char *yytext;
 
-     #include "expr.h"
+     #include "ast.h"
      #define YYSTYPE struct expr *
      struct expr * parser_result = 0;
 %}
