@@ -6,7 +6,7 @@
 
      #include "ast.h"
      #define YYSTYPE struct expr *
-     struct expr * parser_result = 0;
+     struct u * parser_result = 0;
 %}
 
 %token TOKEN_INT
@@ -23,7 +23,7 @@
 %token type
 %token name
 
-%union {
+%union u {
 	struct decl *decl;
 	struct stmt *stmt;
 	struct expr *expr;
@@ -39,7 +39,7 @@
 
 %%
 
-program : decl_list                { parser_result = $1; }
+program : decl_list                { parser_result = decl_create(0,0,0,0,$1); }
      ;
 
 

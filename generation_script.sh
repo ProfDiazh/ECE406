@@ -10,4 +10,4 @@ flex -o scanner.c scanner.flex
 
 echo "Compiling parser.c, scanner.c, and main.c -> compiler.exe"
 
-gcc main_tree.c scanner.c parser.c -o compiler.exe
+gcc -w main_tree.c scanner.c parser.c -o compiler.exe
