@@ -6,7 +6,7 @@ DIGIT [0-9]
 LETTER [a-zA-Z]
 
 %%
-(" "|\t|\n)     /* skip whitespace */
+(" "|\t|\n)     			  /* skip whitespace */
 {DIGIT}+                      { return TOKEN_INT; }
 \+                            { return TOKEN_PLUS; }
 \-                            { return TOKEN_MINUS; }
