@@ -1,0 +1,11 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+._* (AppleDouble resource forks)
+.DocumentRevisions-V100
+.Spotlight-V100
+.Trashes
+parser.c
+parser.output
+scanner.c
+token.h
