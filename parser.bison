@@ -5,7 +5,6 @@
 
      extern char *yytext;
      extern int yylex(void);
-     extern void yyerror(const char *s);
      
      struct decl * parser_result = 0;
 %}
