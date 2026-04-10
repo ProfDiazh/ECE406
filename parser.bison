@@ -46,7 +46,7 @@ program : decl_list                     { parser_result = $1; }
         ;
 
 
-decl_list : decl TOKEN_SEMI decl_list              { $$ = $1; $1->next = $2; }
+decl_list : decl TOKEN_SEMI decl_list              { $$ = $1; $1->next = $3; }
           | /* epsilon */               { $$ = 0; }
           ; 
 
