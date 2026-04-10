@@ -9,14 +9,14 @@
      
      struct expr * parser_result = 0;
 
-     %union {
+     union {
           struct decl *decl;
           struct stmt *stmt;
           struct expr *expr;
           struct type *type;
           char *name;
      };
-     
+
 %}
 
 
