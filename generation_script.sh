@@ -18,8 +18,5 @@ gcc main_tree.c scanner.c parser.c -o compiler.exe #-w
 
 echo "Executing test1"
 
-./compiler.exe "program.c"
+./compiler.exe "test1.c"
 
-#echo "Executing test2"
-
-#echo "program.c" | ./compiler.exe
