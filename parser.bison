@@ -21,9 +21,6 @@
 %token TOKEN_ERROR
 %token TOKEN_ASSIGN
 %token stmt
-%token type
-
-
 
 %union {
      struct decl *decl;
@@ -37,6 +34,7 @@
 %type <stmt> stmt
 %type <expr> expr term factor
 %type <type> type
+%token <type> TOKEN_TYPE_INT TOKEN_TYPE_BOOL TOKEN_TYPE_CHAR
 %type <name> name
 %token <name> TOKEN_NAME 
 
@@ -53,8 +51,8 @@ decl_list : decl TOKEN_SEMI decl_list   { $$ = $1; $1->next = $3; }
 
 
 
-decl : type name                       { $$ = decl_create($2,0,0,0,0); }
-     | type name TOKEN_ASSIGN expr     { $$ = decl_create($2,0,$4,0,0); }
+decl : type name                       { $$ = decl_create($2,$1,0,0,0); }
+     | type name TOKEN_ASSIGN expr     { $$ = decl_create($2,$1,$4,0,0); }
      ;
 
 
@@ -79,6 +77,10 @@ factor : TOKEN_MINUS factor            { $$ = expr_create(EXPR_SUB, expr_create_
 name : TOKEN_NAME                      { $$ = strdup(yytext); }
      ;
 
+type : TOKEN_TYPE_INT                       { $$ = type_create(TYPE_INTEGER, 0, 0); }
+     | TOKEN_TYPE_BOOL                      { $$ = type_create(TYPE_BOOLEAN, 0, 0); }
+     | TOKEN_TYPE_CHAR                      { $$ = type_create(TYPE_CHARACTER, 0, 0); }
+     ;
 
 
 %%

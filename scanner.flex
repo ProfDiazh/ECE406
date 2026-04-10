@@ -3,7 +3,8 @@
 %}
 
 DIGIT [0-9]
-LETTER [a-z]
+LETTER [a-zA-Z]
+LETTER2 [a-zA-Z_]
 
 %%
 (" "|\t|\n)     			  { ; } /* skip whitespace */
@@ -17,8 +18,10 @@ LETTER [a-z]
 \;                            { return TOKEN_SEMI; }
 \=                            { return TOKEN_ASSIGN; }
 stm                           { return stmt; }
-(int|boolean|char)            { return type; }
-{LETTER}                      { return TOKEN_NAME; }
+int            				  { return TOKEN_TYPE_INT; }
+char            			  { return TOKEN_TYPE_CHAR; }
+(bool|boolean)                { return TOKEN_TYPE_BOOL; }
+{LETTER}+{LETTER2}*           { return TOKEN_NAME; }
 
 
 .                             { return TOKEN_ERROR; }
