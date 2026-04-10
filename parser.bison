@@ -8,6 +8,15 @@
      #define YYSTYPE struct expr *
      
      struct expr * parser_result = 0;
+
+     %union {
+          struct decl *decl;
+          struct stmt *stmt;
+          struct expr *expr;
+          struct type *type;
+          char *name;
+     };
+     
 %}
 
 
@@ -24,22 +33,6 @@
 %token stmt
 %token type
 %token name
-
-
-%union {
-     struct decl *decl;
-     struct stmt *stmt;
-     struct expr *expr;
-     struct type *type;
-     char *name;
-};
-
-%type <decl> program decl_list decl 
-%type <stmt> stmt
-%type <expr> expr term factor
-%type <type> type
-%type <name> name
-
 
 
 %%
