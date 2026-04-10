@@ -45,7 +45,7 @@ program : decl_list                     { parser_result = $1; }
         ;
 
 
-decl_list : (decl | expr) decl_list     { $$ = $1; $1->next = $2; }
+decl_list : decl decl_list              { $$ = $1; $1->next = $2; }
           | /* epsilon */               { $$ = 0; }
           ; 
 
