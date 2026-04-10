@@ -6,7 +6,7 @@ DIGIT [0-9]
 LETTER [a-z]
 
 %%
-(" "|\t|\n)     			  /* skip whitespace */
+(" "|\t|\n)     			  { ; } /* skip whitespace */
 {DIGIT}+                      { return TOKEN_INT; }
 \+                            { return TOKEN_PLUS; }
 \-                            { return TOKEN_MINUS; }
@@ -19,6 +19,7 @@ LETTER [a-z]
 stm                           { return stmt; }
 (int|boolean|char)            { return type; }
 {LETTER}                      { return TOKEN_NAME; }
+
 
 .                             { return TOKEN_ERROR; }
 %%
