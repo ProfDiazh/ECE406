@@ -163,7 +163,9 @@ void decl_print(struct decl *e )
 	printf("%s",e->name); 
 	printf("] "); 
 
-	decl_print(e->value);
+	expr_print(e->value);
+
+	decl_print(e->next);
 
 }
 
