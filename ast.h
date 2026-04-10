@@ -143,8 +143,16 @@ struct decl * decl_create( char *name,
 	d->value = value;
 	d->code = code;
 	d->next = next;
+
+	printf("var ["); 
+	printf("%s",d->name); 
+	printf("] "); 
+
 	return d;
 }
+
+type name TOKEN_SEMI                      { $$ = decl_create($2,$1,0,0,0); }
+
 
 
 void decl_print(struct decl *e )
@@ -154,7 +162,8 @@ void decl_print(struct decl *e )
 	printf("var ["); 
 	printf("%s",e->name); 
 	printf("] "); 
-	decl_print(e->next);
+
+	decl_print(e->value);
 
 }
 

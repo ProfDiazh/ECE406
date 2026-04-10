@@ -19,3 +19,7 @@ gcc main_tree.c scanner.c parser.c -o compiler.exe -w
 echo "Executing test1"
 
 echo "int x;" | ./compiler.exe
+
+echo "Executing test2"
+
+echo "int x = 5;" | ./compiler.exe
