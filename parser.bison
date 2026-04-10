@@ -22,7 +22,7 @@
 %token TOKEN_ASSIGN
 %token stmt
 %token type
-%token TOKEN_NAME
+
 
 
 %union {
@@ -37,7 +37,7 @@
 %type <stmt> stmt
 %type <expr> expr term factor
 %type <type> type
-%type <name> name
+%token <name> TOKEN_NAME
 
 
 %%
@@ -72,7 +72,7 @@ term : term TOKEN_MUL factor       { $$ = expr_create(EXPR_MUL,$1,$3);  }
 
 factor : TOKEN_MINUS factor            { $$ = expr_create(EXPR_SUB, expr_create_integer_literal(0),$2); }
      | TOKEN_LPAREN expr TOKEN_RPAREN  { $$ = $2; }
-     | TOKEN_INT                       { $$ = expr_create_integer_literal(atoi($1)); }
+     | TOKEN_INT                       { $$ = expr_create_integer_literal(atoi(yytext)); }
      ;
 
 name : TOKEN_NAME                      { $$ = $1; }
