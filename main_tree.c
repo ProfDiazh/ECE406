@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-extern decl * parser_result;
+extern struct decl * parser_result;
 extern int yyparse();
 
 int main()
