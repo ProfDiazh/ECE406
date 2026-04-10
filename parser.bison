@@ -6,7 +6,7 @@
 
      #include "ast.h"
      
-     struct expr * parser_result = 0;
+     struct decl * parser_result = 0;
 
 
 
@@ -29,17 +29,35 @@
 
 
 %union {
+     struct decl *decl;
+     struct stmt *stmt;
      struct expr *expr;
+     struct type *type;
+     char *name;
 };
 
-%type <expr> expr term factor program
-
+%type <decl> program decl_list decl 
+%type <stmt> stmt
+%type <expr> expr term factor
+%type <type> type
+%type <name> name
 
 
 %%
 
-program : expr TOKEN_SEMI          { expr_print($1); }
+program : decl_list                { parser_result = $1; }
         ;
+
+
+decl_list : decl decl_list         { $$ = $1; $1->next = $2; }
+          | /* epsilon */          { $$ = 0; }
+          ; 
+
+
+
+decl : type name TOKEN_SEMI                      { $$ = decl_create($2,$1,0,0,0); }
+     | type name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($2,$1,$4,0,0); }
+     ;
 
 
 expr : expr TOKEN_PLUS term        { $$ = expr_create(EXPR_ADD,$1,$3); }
@@ -52,6 +70,7 @@ term : term TOKEN_MUL factor       { $$ = expr_create(EXPR_MUL,$1,$3);  }
      | term TOKEN_DIV factor       { $$ = expr_create(EXPR_DIV,$1,$3);  }
      | factor                      { $$ = $1; }
      ;
+
 
 
 factor : TOKEN_MINUS factor            { $$ = expr_create(EXPR_SUB, expr_create_integer_literal(0),$2); }
