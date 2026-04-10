@@ -37,7 +37,7 @@
 %type <stmt> stmt
 %type <expr> expr term factor
 %type <type> type
-%token <name> TOKEN_NAME
+%token <name> TOKEN_NAME name
 
 
 %%
