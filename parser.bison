@@ -6,8 +6,10 @@
 
      #include "ast.h"
      #define YYSTYPE struct expr *
+     
      struct expr * parser_result = 0;
 %}
+
 
 %token TOKEN_INT
 %token TOKEN_PLUS
@@ -40,16 +42,16 @@
 %%
 
 program : expr TOKEN_SEMI          { parser_result = $1; }
-     ;
+        ;
 
 
 decl_list : decl decl_list         { $$ = $1; $1->next = $2; }
           | /* epsilon */          { $$ = 0; }
-     ; 
+          ; 
 
 
-decl : type name TOKEN_SEMI        		    { $$ = decl_create($2,$1,0,0,0); }
-     | type name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($2,$1,$4,0,0); }
+decl : type name         		    { $$ = decl_create($2,$1,0,0,0); }
+     | type name TOKEN_ASSIGN expr     { $$ = decl_create($2,$1,$4,0,0); }
      ;
 
 
