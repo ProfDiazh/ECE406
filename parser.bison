@@ -46,14 +46,14 @@ program : decl_list                     { parser_result = $1; }
         ;
 
 
-decl_list : decl decl_list              { $$ = $1; $1->next = $2; }
+decl_list : decl TOKEN_SEMI decl_list              { $$ = $1; $1->next = $2; }
           | /* epsilon */               { $$ = 0; }
           ; 
 
 
 
-decl : name TOKEN_SEMI                      { $$ = decl_create($1,0,0,0,0); }
-     | name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($1,0,$3,0,0); }
+decl : name                       { $$ = decl_create($1,0,0,0,0); }
+     | name TOKEN_ASSIGN expr     { $$ = decl_create($1,0,$3,0,0); }
      ;
 
 
