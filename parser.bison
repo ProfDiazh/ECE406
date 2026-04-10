@@ -51,8 +51,8 @@ decl_list : decl decl_list              { $$ = $1; $1->next = $2; }
 
 
 
-decl : type name TOKEN_SEMI                      { $$ = decl_create($2,0,0,0,0); }
-     | type name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($2,0,$4,0,0); }
+decl : name TOKEN_SEMI                      { $$ = decl_create($1,0,0,0,0); }
+     | name TOKEN_ASSIGN expr TOKEN_SEMI    { $$ = decl_create($1,0,$3,0,0); }
      ;
 
 
