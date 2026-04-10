@@ -6,20 +6,8 @@
 
      #include "ast.h"
      #define YYSTYPE struct expr *
-
-
-     union node {
-          struct decl *decl;
-          struct stmt *stmt;
-          struct expr *expr;
-          struct type *type;
-          char *name;
-     };
      
-     union node parser_result = 0;
-
-
-
+     struct expr * parser_result = 0;
 %}
 
 
@@ -38,9 +26,25 @@
 %token name
 
 
+%union {
+     struct decl *decl;
+     struct stmt *stmt;
+     struct expr *expr;
+     struct type *type;
+     char *name;
+};
+
+%type <decl> program decl_list decl 
+%type <stmt> stmt
+%type <expr> expr term factor
+%type <type> type
+%type <name> name
+
+
+
 %%
 
-program : expr TOKEN_SEMI          { parser_result = $1; }
+program : expr TOKEN_SEMI          { parser_result -> $1; }
         ;
 
 
