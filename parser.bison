@@ -1,15 +1,11 @@
 %{
      #include <stdio.h>
      #include <stdlib.h>
+     #include "ast.h"     
 
      extern char *yytext;
-
-     #include "ast.h"
      
      struct decl * parser_result = 0;
-
-
-
 %}
 
 
@@ -45,12 +41,12 @@
 
 %%
 
-program : decl_list                { parser_result = $1; }
+program : decl_list                     { parser_result = $1; }
         ;
 
 
-decl_list : decl decl_list         { $$ = $1; $1->next = $2; }
-          | /* epsilon */          { $$ = 0; }
+decl_list : (decl | expr) decl_list     { $$ = $1; $1->next = $2; }
+          | /* epsilon */               { $$ = 0; }
           ; 
 
 
