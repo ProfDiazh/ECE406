@@ -147,13 +147,14 @@ struct decl * decl_create( char *name,
 }
 
 
-void decl_print( struct decl *e )
+void decl_print(struct decl *e )
 {
 	if(!e) return;
 		
 	printf("var ["); 
 	printf("%s",e->name); 
 	printf("] "); 
+	decl_print(e->next);
 
 }
 
