@@ -18,8 +18,8 @@ gcc main_tree.c scanner.c parser.c -o compiler.exe #-w
 
 echo "Executing test1"
 
-echo "int x;" | ./compiler.exe
+./compiler.exe "program.c"
 
-echo "Executing test2"
+#echo "Executing test2"
 
-echo "int b=5+8; int l; int c=81;" | ./compiler.exe
+#echo "program.c" | ./compiler.exe
