@@ -151,9 +151,6 @@ struct decl * decl_create( char *name,
 	return d;
 }
 
-type name TOKEN_SEMI                      { $$ = decl_create($2,$1,0,0,0); }
-
-
 
 void decl_print(struct decl *e )
 {

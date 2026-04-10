@@ -2,6 +2,7 @@
 
 extern struct decl * parser_result;
 extern int yyparse();
+extern void decl_print(struct decl *e );
 
 int main()
 {
