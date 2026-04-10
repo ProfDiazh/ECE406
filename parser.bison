@@ -6,16 +6,19 @@
 
      #include "ast.h"
      #define YYSTYPE struct expr *
-     
-     struct expr * parser_result = 0;
 
-     union {
+
+     union node {
           struct decl *decl;
           struct stmt *stmt;
           struct expr *expr;
           struct type *type;
           char *name;
      };
+     
+     struct node * parser_result = 0;
+
+
 
 %}
 
