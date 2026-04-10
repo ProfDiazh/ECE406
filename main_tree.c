@@ -1,5 +1,5 @@
 #include <stdio.h>
-extern char *parser_result;
+extern decl *parser_result;
 
 
 extern int yyparse();
@@ -7,8 +7,8 @@ extern int yyparse();
 int main()
 {
    if(yyparse()==0) {
-      printf("Parse successful!\n Expression Tree Version 2: ");
-      expr_print(parser_result);
+      printf("Parse successful!\n AST: \n ------ \n");
+      decl_print(parser_result);
       printf("\n");
    } else {
       printf("Parse failed.\n");
