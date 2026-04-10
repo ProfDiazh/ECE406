@@ -16,7 +16,7 @@
           char *name;
      };
      
-     struct node * parser_result = 0;
+     union node parser_result = 0;
 
 
 
