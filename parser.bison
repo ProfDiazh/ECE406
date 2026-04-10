@@ -22,7 +22,7 @@
 %token TOKEN_ASSIGN
 %token stmt
 %token type
-%token name
+%token TOKEN_NAME
 
 
 %union {
@@ -74,6 +74,11 @@ factor : TOKEN_MINUS factor            { $$ = expr_create(EXPR_SUB, expr_create_
      | TOKEN_LPAREN expr TOKEN_RPAREN  { $$ = $2; }
      | TOKEN_INT                       { $$ = expr_create_integer_literal(atoi(yytext)); }
      ;
+
+name : TOKEN_NAME                      { $$ = atoi(yytext); }
+     ;
+
+
 
 %%
 
