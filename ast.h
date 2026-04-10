@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 /********************************
@@ -7,10 +8,10 @@
 ********************************/
 
 typedef enum {
-	TYPE_VOID,
 	TYPE_BOOLEAN,
 	TYPE_CHARACTER,
 	TYPE_INTEGER,
+	TYPE_VOID,
 	TYPE_STRING,
 	TYPE_ARRAY,
 	TYPE_FUNCTION
@@ -48,6 +49,7 @@ struct type * type_create( type_t kind,
 
 
 
+
 struct param_list * param_list_create( char *name,
                                        struct type *type,
                                        struct param_list *next )
@@ -81,9 +83,12 @@ void type_print(struct type *t)
         case TYPE_FUNCTION:
             printf("function ");
             type_print(t->subtype); // return type
-            printf(" (");
-            param_list_print(t->params);
-            printf(")");
+            if(t->params) {
+	        printf(" (");
+	        param_list_print(t->params);
+	        printf(")");
+	    }
+            
             break;
     }
 }
