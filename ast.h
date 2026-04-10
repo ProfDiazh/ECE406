@@ -33,6 +33,75 @@ struct param_list {
 
 
 
+struct type * type_create( type_t kind,
+                           struct type *subtype,
+                           struct param_list *params )
+{
+    struct type *t = malloc(sizeof(*t));
+
+    t->kind = kind;
+    t->subtype = subtype;
+    t->params = params;
+
+    return t;
+}
+
+
+
+struct param_list * param_list_create( char *name,
+                                       struct type *type,
+                                       struct param_list *next )
+{
+    struct param_list *p = malloc(sizeof(*p));
+
+    p->name = name;
+    p->type = type;
+    p->next = next;
+
+    return p;
+}
+
+
+void type_print(struct type *t)
+{
+    if(!t) return;
+
+    switch(t->kind) {
+        case TYPE_VOID: printf("void"); break;
+        case TYPE_BOOLEAN: printf("bool"); break;
+        case TYPE_CHARACTER: printf("char"); break;
+        case TYPE_INTEGER: printf("int"); break;
+        case TYPE_STRING: printf("string"); break;
+
+        case TYPE_ARRAY:
+            printf("array of ");
+            type_print(t->subtype);
+            break;
+
+        case TYPE_FUNCTION:
+            printf("function ");
+            type_print(t->subtype); // return type
+            printf(" (");
+            param_list_print(t->params);
+            printf(")");
+            break;
+    }
+}
+
+
+void param_list_print(struct param_list *p)
+{
+    if(!p) return;
+
+    printf("%s: ", p->name);
+    type_print(p->type);
+
+    if(p->next) {
+        printf(", ");
+        param_list_print(p->next);
+    }
+}
+
 
 /********************************
 	EXPRESSIONS
@@ -154,13 +223,27 @@ void decl_print(struct decl *e )
 		
 	printf("var ["); 
 	printf("%s",e->name); 
-	printf("] "); 
+	printf("] : "); 
 
-	expr_print(e->value);
+        type_print(e->type);
+
+	if(e->value) {
+	    printf(" = expr "); 
+	    expr_print(e->value);
+	}	
+	 
+	if(e->code) {
+		printf(" code  ");
+	        stmt_print(e->code);
+	} else {
+	        printf(";\n");
+	}
 
 	decl_print(e->next);
 
 }
+
+
 
 /********************************
 	STATEMENTS
@@ -191,11 +274,84 @@ struct stmt {
 
 
 
-
-/* struct stmt * stmt_create( stmt_t kind,
+struct stmt * stmt_create( stmt_t kind,
                            struct decl *decl, struct expr *init_expr,
                            struct expr *expr, struct expr *next_expr,
                            struct stmt *body, struct stmt *else_body,
-                           struct stmt *next ); */
+                           struct stmt *next )
+{
+    struct stmt *s = malloc(sizeof(*s));
 
+    s->kind = kind;
+    s->decl = decl;
+    s->init_expr = init_expr;
+    s->expr = expr;
+    s->next_expr = next_expr;
+    s->body = body;
+    s->else_body = else_body;
+    s->next = next;
+
+    return s;
+}
+
+
+void stmt_print(struct stmt *s)
+{
+    if(!s) return;
+
+    switch(s->kind) {
+
+        case STMT_DECL:
+            decl_print(s->decl);
+            break;
+
+        case STMT_EXPR:
+            expr_print(s->expr);
+            printf(";\n");
+            break;
+
+        case STMT_PRINT:
+            printf("print ");
+            expr_print(s->expr);
+            printf(";\n");
+            break;
+
+        case STMT_RETURN:
+            printf("return ");
+            expr_print(s->expr);
+            printf(";\n");
+            break;
+
+        case STMT_IF_ELSE:
+            printf("if (");
+            expr_print(s->expr);
+            printf(")\n");
+            stmt_print(s->body);
+
+            if(s->else_body) {
+                printf("else\n");
+                stmt_print(s->else_body);
+            }
+            break;
+
+        case STMT_FOR:
+            printf("for (");
+            expr_print(s->init_expr);
+            printf("; ");
+            expr_print(s->expr);
+            printf("; ");
+            expr_print(s->next_expr);
+            printf(")\n");
+            stmt_print(s->body);
+            break;
+
+        case STMT_BLOCK:
+            printf("{\n");
+            stmt_print(s->body);
+            printf("}\n");
+            break;
+    }
+
+    stmt_print(s->next);
+}
 
