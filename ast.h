@@ -144,10 +144,6 @@ struct decl * decl_create( char *name,
 	d->code = code;
 	d->next = next;
 
-	printf("var ["); 
-	printf("%s",d->name); 
-	printf("] "); 
-
 	return d;
 }
 
