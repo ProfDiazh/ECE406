@@ -5,11 +5,16 @@ extern int yyparse();
 extern void decl_print(struct decl *e );
 extern FILE *yyin;
 
-int main()
+int main(int argc, char **argv)
 {
-	yyin = fopen("program.c","r"); // Set Flex's input stream to your file
+	if (argc < 2) {
+		perror("File name is missing!\n");
+		return -1;
+	}
+		
+	yyin = fopen(argv[1], "r"); // Set Flex's input stream to your file
 	if(!yyin) {
-		printf("Could not open program.c!\n");
+		perror("Could not open program.c!\n");
 		return 1;
 	}
 	
