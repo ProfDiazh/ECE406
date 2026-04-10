@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Clean files parser.c scanner.c token.h parser.output"
+
+rm parser.c scanner.c token.h parser.output
+
 echo "Generating parser.c, token.h, and parser.output"
 
 bison --defines=token.h --output=parser.c parser.bison -v
