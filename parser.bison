@@ -30,18 +30,10 @@
 
 
 %union {
-     struct decl *decl;
-     struct stmt *stmt;
      struct expr *expr;
-     struct type *type;
-     char *name;
 };
 
-%type <decl> program decl_list decl 
-%type <stmt> stmt
-%type <expr> expr term factor
-%type <type> type
-%type <name> name
+%type <expr> expr term factor program
 
 
 
