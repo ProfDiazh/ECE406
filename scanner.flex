@@ -18,7 +18,7 @@ LETTER [a-zA-Z]
 \=                            { return TOKEN_ASSIGN; }
 stm                           { return stmt; }
 (int|boolean|char)            { return type; }
-{LETTER}+({DIGIT}|{LETTER}|\_)*                             { return TOKEN_NAME; }
+{LETTER}+                             { return TOKEN_NAME; }
 
 .                             { return TOKEN_ERROR; }
 %%
